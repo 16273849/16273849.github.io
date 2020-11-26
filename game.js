@@ -4,6 +4,7 @@ var buttonColor = ["green","red","yellow","blue"];
 var userClickedPattern = [];
 var level = 0;
 var i = 0;
+var playGame = false;
 
 function nextSequence(){
   var randomNumber = Math.floor(Math.random()*4);
@@ -18,7 +19,7 @@ function gameMode(){
       $("h1").text("Level "+level);
       playSound(buttonColor[nextColor]);
       gamePattern.push(buttonColor[nextColor]);
-  console.log("nextColor "+ nextColor);
+  // console.log("nextColor "+ nextColor);
 }
 
 //Checking
@@ -31,15 +32,19 @@ function checkPress(userChoosenColor){
           }
     }else{
           wrongPress();
-
           i=0;
     }
 }
 
 // Start game
+// if(playGame==true){
 $(document).keydown(function(){
-  gameMode();
+  // playGame = true;
+  setTimeout(function (){gameMode();},500 );
+  // gameMode();
+
 });
+// }
 
 //Play Game
 // User Clicked
@@ -51,6 +56,7 @@ $(".btn").on("click", function(e){
     checkPress(userChoosenColor);
   // console.log(userClickedPattern);
 });
+
 
 function playSound(name){
      buttonName = "#"+name;
@@ -76,8 +82,13 @@ function wrongPress(){
       wrongAudio.play();
       $("body").addClass("red");
       setTimeout(function(){
-        $("body").removeClass("red");
-      },200);
+        $("body").removeClass("red");},1000);
       $("h1").text("Game Over!!!");
-      setTimeout(function(){$("#wrong").addClass("wrong");}, 300);
+      setTimeout(function(){$("#wrong").addClass("wrong");}, 1000);
+      setTimeout(jumping,1000);
+
+}
+
+function jumping(){
+  location.replace("gameOver.html");
 }
